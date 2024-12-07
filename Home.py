@@ -1,7 +1,8 @@
 import streamlit as st
 
-st.title("Hello, world!")
+st.set_page_config(
+    page_title="FullstackGPT Home",
+    page_icon="🤖"
+)
 
-st.subheader("Welcome to Streamlit!")
-
-st.markdown("")
+st.title("FullstackGPT Home")
