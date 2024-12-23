@@ -3,3 +3,4 @@ env3.11.6/
 files/
 .cache/
 .streamlit
+.DS_Store
