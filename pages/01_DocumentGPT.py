@@ -8,6 +8,7 @@ from langchain.vectorstores.faiss import FAISS
 from langchain.chat_models import ChatOpenAI
 from langchain.callbacks.base import BaseCallbackHandler
 import streamlit as st
+from langchain.memory import ConversationSummaryBufferMemory
 
 st.set_page_config(
     page_title="DocumentGPT",
@@ -38,7 +39,7 @@ llm = ChatOpenAI(
 )
 
 
-@st.cache_data(show_spinner="Embedding file...")
+@st.cache_data(show_spinner="Embedding your file...")
 def embed_file(file):
     file_content = file.read()
     file_path = f"./.cache/files/{file.name}"
@@ -106,19 +107,32 @@ Welcome!
             
 Use this chatbot to ask questions to an AI about your files!
 
+AI will answer all about your files ASAP.
+
 Upload your files on the sidebar.
 """
 )
 
 with st.sidebar:
+    # 1. 사용자 입력을 통한 OpenAI API 키 로드
+    api_key = st.text_input("Enter your OpenAI API Key", type="password")
+
+    if api_key:
+        st.session_state["api_key"] = api_key
+
     file = st.file_uploader(
         "Upload a .txt .pdf or .docx file",
         type=["pdf", "txt", "docx"],
     )
 
+    # 2. 깃허브 링크 추가
+    st.markdown(
+        "[View this project on GitHub](https://github.com/your-repo-link)"
+    )
+
 if file:
     retriever = embed_file(file)
-    send_message("I'm ready! Ask away!", "ai", save=False)
+    send_message("OK, I'm ready! Ask anything :)", "ai", save=False)
     paint_history()
     message = st.chat_input("Ask anything about your file...")
     if message:
@@ -133,7 +147,6 @@ if file:
         )
         with st.chat_message("ai"):
             chain.invoke(message)
-
 
 else:
     st.session_state["messages"] = []
