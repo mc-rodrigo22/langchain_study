@@ -127,7 +127,7 @@ with st.sidebar:
 
     # 2. 깃허브 링크 추가
     st.markdown(
-        "[View this project on GitHub](https://github.com/mc-rodrigo22/langchain_study/commit/a5943ffbc6fc2abce3df5f359cd14ef70eb5e92d)"
+        "[View this project on GitHub](https://github.com/mc-rodrigo22/langchain_study/blob/df1a88f3d25de0b1a75a644b4452c5f54438a2fa/pages/01_DocumentGPT.py)"
     )
 
 if file:
